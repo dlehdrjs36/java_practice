@@ -1,17 +1,20 @@
 package CollectionTest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import jxl.write.WriteException;
+
 public class Employee {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws WriteException, ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		
 		EmployeeMgmt mgmt = new EmployeeMgmt();
-		
+		EmployeeDAO dao = new EmployeeDAO();
 		//EmployeeDTO dto = dao.getEmpDTO("113");
 		//System.out.println(dto);
 		 
@@ -43,6 +46,8 @@ public class Employee {
 				System.exit(0);	
 			case 7:
 				mgmt.empListCursor();
+				break;
+			case 8:
 				break;
 			}
 		}

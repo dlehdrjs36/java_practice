@@ -1,5 +1,7 @@
 package CollectionTest;
 
+
+
 public class SearchVO extends EmployeeDTO
 {
 	private String searchCondition;
