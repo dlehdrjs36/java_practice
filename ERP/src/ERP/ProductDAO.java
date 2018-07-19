@@ -12,7 +12,6 @@ import java.util.List;
 
 
 
-
 public class ProductDAO {
 
 	Connection conn = null;
@@ -106,7 +105,7 @@ public class ProductDAO {
 	// 상품수정
 	public void updateProduct(ProductDTO dto) {
 		getConnection();
-		
+
 		int c = 0; // 숫자로써도되지만 변수위치가 바꼇을때 수정하기귀찮음. 따로 카운트 사용.
 		String sql = "update product set p_name = ?, explanation = ? , b_stock = ? , price = ? where p_key = ?";
 
@@ -120,7 +119,7 @@ public class ProductDAO {
 			pstmt.setInt(++c, dto.getPkey()); // 다섯번째 ?에 넣을값
 
 			int cnt = pstmt.executeUpdate(); // 삽입,삭제,업데이트
-			
+
 			System.out.println("상품키 = \"" + dto.getPkey() + "\"" + "가 " + cnt + "건" + " 수정되었습니다.");
 
 		} catch (SQLException e) {
@@ -200,27 +199,77 @@ public class ProductDAO {
 		}
 		return list; // 반환.
 	}
+
 	// 입출고정보 추가
-		public void insertSR(ProductDTO dto) { 
-		
+	public void insertSR(ProductDTO dto) {
+
 		getConnection();
+
 		List<ProductDTO> list = new ArrayList<>();
-		
+
 		try {
-			CallableStatement cstmt = conn.prepareCall("{call insert_stock_info(?,?,?,?)}");
-			
+			CallableStatement cstmt = conn.prepareCall("{call insert_stock_info(?,?,?,?,?)}");
+
 			cstmt.setInt(1, dto.getPkey());
 			cstmt.setInt(2, dto.getStore());
 			cstmt.setInt(3, dto.getRelease());
 			cstmt.setString(4, dto.getStoragename());
-			
+			cstmt.registerOutParameter(5, java.sql.Types.INTEGER);
+
 			int r = cstmt.executeUpdate();
-			System.out.println( "입출고정보 " + r + "건이 추가되었습니다.");
-			
+
+			int errorCode = cstmt.getInt(5);
+
+			System.out.println(errorCode);
+
+			if (errorCode == 0) {
+				System.out.println("재고가 부족합니다.");
+			} else if (errorCode == 1) {
+
+				System.out.println("입출고정보가 추가되었습니다.");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+	}
+
+	// 입출고정보 수정
+	public void updateSR(ProductDTO dto) {
+		getConnection();
+
+		try {
+			CallableStatement cstmt = conn.prepareCall("{ call update_SR_stock(?,?,?,?,?,?) }");
+			cstmt.setInt(1, dto.getPkey());
+			cstmt.setInt(2, dto.getStore());
+			cstmt.setInt(3, dto.getRelease());
+			cstmt.setString(4, dto.getStoragename());
+			cstmt.setInt(5, dto.getSRkey());
+			cstmt.registerOutParameter(6, java.sql.Types.INTEGER);
+
+			int r = cstmt.executeUpdate();
+
+			int errorCode = cstmt.getInt(6);
+
+			if (errorCode == 0) {
+				System.out.println("재고가 부족해집니다.");
+			} else if (errorCode == 1) {
+
+				System.out.println(r + "건이 수정되었습니다.");
+			} else if (errorCode == 2) {
+				System.out.println("상품정보에서 해당하는 상품키를 찾을 수 없습니다.");
+			} else if (errorCode == 3) {
+				System.out.println("창고정보에서 해당하는 창고이름을 찾을 수 없습니다.");
+			}
+			else if (errorCode == 4) {
+				System.out.println("입출력정보에서 해당하는 SR_KEY를 찾을 수 없습니다.");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
 	}
 
 	public List<ProductDTO> getStockList() {

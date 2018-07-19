@@ -15,7 +15,7 @@ public class Main {
 
 		while (true) {
 			System.out.println("---------------------------------------------------------------------------");
-			System.out.println(" 1: 상품정보, 2: 입출고정보관리, 4: 재고정보조회, -5: 창고정보조회, 6: 종료, 7:리스트(커서)");
+			System.out.println(" 1: 상품정보, 2: 입출고정보, 3: 재고정보, -4: 창고정보, 6: 종료, 7:리스트(커서)");
 			System.out.println("---------------------------------------------------------------------------");
 			menu = sc.nextInt();
 			switch (menu) {
@@ -42,7 +42,7 @@ public class Main {
 				
 			case 2: // 입출고정보관리
 				while (true) {
-					System.out.println("0: 입출고정보조회, 1: 입출고추가 , 4: 상위메뉴로 나가기 ");
+					System.out.println("0: 입출고정보조회, 1: 입출고정보추가 ,2:입출고수정, 3:상품입출고이력 4: 상위메뉴로 나가기 ");
 					value = sc.nextInt();
 
 					if (value == 0)
@@ -50,17 +50,18 @@ public class Main {
 					else if (value == 1)
 						mgmt.insertSR();
 					else if (value == 2)
-						mgmt.updateProduct();
+						mgmt.updateSR();
 					else if (value == 3)
 						mgmt.deleteProduct();
 					else if (value == 4)
 						break;
 				}
-			case 3: // 입출고정보조회
-				mgmt.getSRList();
+				break;
+			case 3: // 재고정보조회
+				mgmt.getStockList();
 				break;
 			case 4: // 재고정보조회
-				mgmt.getStockList();
+				
 				break;
 			case 5: // 창고정보조회
 				mgmt.getStorageList();

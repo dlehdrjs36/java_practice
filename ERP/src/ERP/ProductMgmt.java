@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class ProductMgmt {
 
 	ProductDAO dao = null;
-	
 
 	// 상품목록 출력
 	public void getProductList() {
@@ -24,7 +23,8 @@ public class ProductMgmt {
 	}
 
 	// 상품목록 추가
-	// mgmt의 insert를 호출하면 productdto객체에 넣을 값을 입력한 후에 실제 동작부분(dao의 insert메소드를) 호출한다.
+	// mgmt의 insert를 호출하면 productdto객체에 넣을 값을 입력한 후에 실제 동작부분(dao의 insert메소드를)
+	// 호출한다.
 
 	public void insertProduct() {
 		System.out.println("상품 이름을 입력하세요.");
@@ -56,7 +56,7 @@ public class ProductMgmt {
 	public void updateProduct() {
 		Scanner sc3 = new Scanner(System.in);
 		Scanner sc4 = new Scanner(System.in);
-		
+
 		System.out.println("수정할 상품키를 입력하세요.");
 		int ProductKey = sc3.nextInt();
 
@@ -82,46 +82,21 @@ public class ProductMgmt {
 
 		dao.updateProduct(dto);
 	}
-	// 상품제거 
+
+	// 상품제거
 	public void deleteProduct() {
 		Scanner sc3 = new Scanner(System.in);
-		
+
 		System.out.println("제거할 상품키를 입력하세요.");
 		int ProductKey = sc3.nextInt();
-	
+
 		dao = new ProductDAO();
 		ProductDTO dto = new ProductDTO();
 		dto.setPkey(ProductKey);
 
 		dao.deleteProduct(dto);
 	}
-	public void insertSR() {
-		System.out.println("상품키를 입력하세요.");
-		Scanner sc = new Scanner(System.in);
-		int Productkey = sc.nextInt();
 
-		System.out.println("입고개수를 입력하세요.");
-		int store = sc.nextInt();
-
-		
-		System.out.println("출고개수를 입력하세요.");
-		int release = sc.nextInt();
-		
-		Scanner sc2 = new Scanner(System.in);
-		System.out.println("창고이름을 입력하세요.");
-		String storagename = sc2.nextLine();
-
-		dao = new ProductDAO();
-		ProductDTO dto = new ProductDTO();
-
-		dto.setPkey(Productkey);
-		dto.setStore(store);
-		dto.setRelease(release);
-		dto.setStoragename(storagename);
-
-		dao.insertSR(dto);
-		
-	}
 	// 입출고정보 조회
 	public void getSRList() {
 		dao = new ProductDAO();
@@ -136,6 +111,65 @@ public class ProductMgmt {
 		System.out.println(
 				"---------------------------------------------------------------------------------------------------------------");
 
+	}
+
+	// 입출고정보 추가
+	public void insertSR() {
+		System.out.println("상품키를 입력하세요.");
+		Scanner sc = new Scanner(System.in);
+		int Productkey = sc.nextInt();
+
+		System.out.println("입고개수를 입력하세요.");
+		int store = sc.nextInt();
+
+		System.out.println("출고개수를 입력하세요.");
+		int release = sc.nextInt();
+
+		Scanner sc2 = new Scanner(System.in);
+		System.out.println("창고이름을 입력하세요.");
+		String storagename = sc2.nextLine();
+
+		dao = new ProductDAO();
+		ProductDTO dto = new ProductDTO();
+
+		dto.setPkey(Productkey);
+		dto.setStore(store);
+		dto.setRelease(release);
+		dto.setStoragename(storagename);
+
+		dao.insertSR(dto);
+
+	}
+	//입출고 정보 수정
+	public void updateSR() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("수정할 SR_KEY를 입력하세요.");
+		int SRkey = sc.nextInt();
+		
+		System.out.println("상품키를 입력하세요.");
+		
+		int Productkey = sc.nextInt();
+
+		System.out.println("입고개수를 입력하세요.");
+		int store = sc.nextInt();
+
+		System.out.println("출고개수를 입력하세요.");
+		int release = sc.nextInt();
+
+		Scanner sc2 = new Scanner(System.in);
+		System.out.println("창고이름을 입력하세요.");
+		String storagename = sc2.nextLine();
+
+		dao = new ProductDAO();
+		ProductDTO dto = new ProductDTO();
+		
+		dto.setSRkey(SRkey);
+		dto.setPkey(Productkey);
+		dto.setStore(store);
+		dto.setRelease(release);
+		dto.setStoragename(storagename);
+
+		dao.updateSR(dto);
 	}
 
 	public void getStockList() {
