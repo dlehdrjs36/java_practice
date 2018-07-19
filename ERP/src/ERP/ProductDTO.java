@@ -6,6 +6,7 @@ public class ProductDTO {
 	String Pname;
 	String Explanation;
 	int B_stock;
+	int price;
 	
 	// 입출고정보
 	int SRkey;
@@ -27,6 +28,14 @@ public class ProductDTO {
 	
 	public int getPkey() {
 		return Pkey;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public void setPkey(int pkey) {
@@ -105,13 +114,5 @@ public class ProductDTO {
 		Storagename = storagename;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductDTO [Pkey=" + Pkey + ", Pname=" + Pname + ", Explanation=" + Explanation + ", B_stock=" + B_stock
-				+ "]";
-	}
 
-	
-	
-	
 }
