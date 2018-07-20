@@ -140,7 +140,7 @@ public class ProductMgmt {
 		dao.insertSR(dto);
 
 	}
-	//입출고 정보 수정
+	//입출고 정보 수정, 프로시저수정하기
 	public void updateSR() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("수정할 SR_KEY를 입력하세요.");
@@ -170,6 +170,10 @@ public class ProductMgmt {
 		dto.setStoragename(storagename);
 
 		dao.updateSR(dto);
+	}
+	//해당상품의 입출고내역 보기 작업중
+	public void getProductSRList() {
+		
 	}
 
 	public void getStockList() {

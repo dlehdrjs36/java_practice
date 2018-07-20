@@ -234,7 +234,7 @@ public class ProductDAO {
 		}
 	}
 
-	// 입출고정보 수정
+	// 입출고정보 수정. 프로시저 계속작업해야함
 	public void updateSR(ProductDTO dto) {
 		getConnection();
 
@@ -271,6 +271,42 @@ public class ProductDAO {
 			
 		}
 	}
+	// 해당하는 상품의 입출고 내역 작업중
+	public List<ProductDTO> getProductSRList() {
+		getConnection();
+		// ProductDTO 형태의 구조를 갖는 List 생성
+		List<ProductDTO> list = new ArrayList<>();
+		// sql문 저장
+		String sql = "select ?, p_name, stored, released, STORAGE_NAME from product join STORE_RELEASE using (P_KEY)";
+		System.out.println(
+				"---------------------------------------------------------------------------------------------------------------");
+		System.out.println("    P_KEY    " + "   P_NAME   " + "   EXPLANATION   " + "   B_STOCK   " + "   PRICE   ");
+		System.out.println(
+				"---------------------------------------------------------------------------------------------------------------");
+
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			// ResultSet은 쿼리문 결과를 담아줄수있는 객체. sql문의 결과가 rs에 저장되어있음.
+			ResultSet rs = pstmt.executeQuery();
+			// 결과문이 있다면(true) 계속 dto에 값을 넣어준다.
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setInt(1, dto.getPkey());
+				dto.setPname(rs.getString("p_name"));
+				dto.setStore(rs.getInt("stored"));
+				dto.setRelease(rs.getInt("released"));
+				dto.setStoragename(rs.getString("storage_name"));
+				// dto에 값을 저장한후에 리스트에 추가(등록).
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list; // 반환.
+	}
+
 
 	public List<ProductDTO> getStockList() {
 		getConnection();

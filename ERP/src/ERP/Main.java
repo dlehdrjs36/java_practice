@@ -42,7 +42,7 @@ public class Main {
 				
 			case 2: // 입출고정보관리
 				while (true) {
-					System.out.println("0: 입출고정보조회, 1: 입출고정보추가 ,2:입출고수정, 3:상품입출고이력 4: 상위메뉴로 나가기 ");
+					System.out.println("0: 입출고정보조회, 1: 입출고정보추가 ,-보류2:입출고수정, 3:상품입출고이력 4: 상위메뉴로 나가기 ");
 					value = sc.nextInt();
 
 					if (value == 0)
